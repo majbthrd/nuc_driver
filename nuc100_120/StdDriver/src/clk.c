@@ -196,6 +196,14 @@ uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
     CLK->PLLCON |= CLK_PLLCON_PD_Msk;
 
     /* Configure PLL setting if HXT clock is stable */
+    /*
+    WARNING, WARNING, WARNING: The code has been deliberately modified here.
+    Some NUC100 and NUC120 do not have a functioning CLK->CLKSTATUS register.
+    This particular version of source code is intended for use with TinyUSB.
+    Only the NUC120 supports USB, and it requires an external crystal for 
+    valid operation.  Thus, we would never feed the PLL with the RC clock.
+    So, the execution path is forced (as CLK->CLKSTATUS may not work).
+    */
 //    if(CLK->CLKSTATUS & CLK_CLKSTATUS_XTL12M_STB_Msk)    
     if(1)
     {
